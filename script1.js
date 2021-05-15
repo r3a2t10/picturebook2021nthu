@@ -65,6 +65,120 @@ var prompt_values = [{
     }
 ]
 
+/*
+var prompt_values = [{
+        value: '家庭(family)',
+        class: 'btn-default',
+        weight: 1
+    },
+    {
+        value: '友誼(friendship/couples)',
+        class: 'btn-default',
+        weight: 2
+    },
+    {
+        value: '冒險(adventure)',
+        class: 'btn-default',
+        weight: 3
+    },
+    {
+        value: '寫意生活 (enjoy life)',
+        class: 'btn-default',
+        weight: 4
+    },
+    {
+        value: '美景(beautiful scenery)',
+        class: 'btn-default',
+        weight: 5
+    },
+    {
+        value: '家/社區(home/community)',
+        class: 'btn-default',
+        weight: 6
+    },
+    {
+        value: '節慶(holiday/celebration)',
+        class: 'btn-default',
+        weight: 7
+    },
+    {
+        value: '奇幻(imaginary)',
+        class: 'btn-default',
+        weight: 8
+    },
+    {
+        value: '懷舊(nostalgia)',
+        class: 'btn-default',
+        weight: 9
+    },
+    {
+        value: '孤單(loneliness)',
+        class: 'btn-default',
+        weight: 10
+    },
+    {
+        value: '成長(growth)',
+        class: 'btn-default',
+        weight: 11
+    },
+    {
+        value: '病痛/死亡（sick/death）',
+        class: 'btn-default',
+        weight: 12
+    }
+]
+*/
+
+/*
+var prompt_values = [{
+        value: '古典',
+        class: 'btn-default',
+        weight: 1
+    },
+    {
+        value: '優美/可愛',
+        class: 'btn-default',
+        weight: 2
+    },
+    {
+        value: '浪漫/抒情',
+        class: 'btn-default',
+        weight: 3
+    },
+    {
+        value: '寫實',
+        class: 'btn-default',
+        weight: 4
+    },
+    {
+        value: '表現主義',
+        class: 'btn-default',
+        weight: 5
+    },
+    {
+        value: '抽象',
+        class: 'btn-default',
+        weight: 6
+    },
+    {
+        value: '裝飾圖案',
+        class: 'btn-default',
+        weight: 7
+    },
+    {
+        value: '奇幻/怪誕(grotesque)',
+        class: 'btn-default',
+        weight: 8
+    },
+    {
+        value: '幽默/童趣',
+        class: 'btn-default',
+        weight: 9
+    }
+]
+*/
+
+
 function setCharAt(str, index, chr) {
     if (index > str.length - 1) return str;
     return str.substring(0, index) + chr + str.substring(index + 1);
@@ -137,7 +251,7 @@ function myFunction() {
         if (select_alert_num == 0) {
             // Generate download of hello.txt file with some content
             var text = document.getElementById("text-val").value;
-            var filename = S + '_' + E + '.txt';
+            var filename = '1_' + S + '_' + E + '.txt';
             download(filename, text);
         } else {
             alert(select_alert);
