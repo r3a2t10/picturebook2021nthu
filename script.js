@@ -80,7 +80,7 @@ function myFunction() {
     }
     S = document.getElementById("myStartNumber").value;
     E = document.getElementById("myEndNumber").value;
-    document.getElementById("demo").innerHTML = "Start with: " + S + " End with: " + E;
+    document.getElementById("demo").innerHTML = "從第 " + S + " 張開始，第 " + E + " 張結束。";
     createPromptItems(S, E);
 
     var initial_array = '';
@@ -91,21 +91,31 @@ function myFunction() {
     var arr = Array(E - S).fill(initial_array);
     document.getElementById("text-val").value = arr;
 
-    // When user clicks a value to agree/disagree with the prompt, display to the user what they selected
+    var arr_select = Array(E - S).fill(0);
+
+    // When user clicks a value display to the user what they selected
     $('.value-btn').mousedown(function() {
         var classList = $(this).attr('class');
         var classArr = classList.split(" ");
         var this_group = classArr[0];
         var res = this_group.replace("group", "");
-        var this_wight = classArr[classArr.length - 1];
+        var this_wight = classArr[1];
         var res_w = this_wight.replace("w", "");
 
         if ($(this).hasClass('active')) {
             $(this).removeClass('active');
             arr[res - S] = setCharAt(arr[res - S], res_w - 1, '0');
+            arr_select[res - S] -= 1;
         } else {
             $(this).addClass('active');
             arr[res - S] = setCharAt(arr[res - S], res_w - 1, '1');
+            arr_select[res - S] += 1;
+            if (arr_select[res - S] > 2) {
+                $(this).removeClass('active');
+                arr[res - S] = setCharAt(arr[res - S], res_w - 1, '0');
+                arr_select[res - S] -= 1;
+                alert('每張圖只能標注2個標籤，請取消別的標籤再進行選取。');
+            }
         }
         document.getElementById("text-val").value = arr;
     })
@@ -113,19 +123,32 @@ function myFunction() {
 
     // Start file download.
     document.getElementById("dwn-btn").addEventListener("click", function() {
-        // Generate download of hello.txt file with some content
-        var text = document.getElementById("text-val").value;
-        var filename = S + '_' + E + '.txt';
 
-        download(filename, text);
+        var select_alert = "";
+        var select_alert_num = 0;
+        // Check Every Pic
+        for (var i = 0; i < arr_select.length; i++) {
+            if (arr_select[i] != 2) {
+                select_alert += "第" + i + "張，未標記完成。\n";
+                select_alert_num += 1;
+            }
+        }
+
+        if (select_alert_num == 0) {
+            // Generate download of hello.txt file with some content
+            var text = document.getElementById("text-val").value;
+            var filename = S + '_' + E + '.txt';
+            download(filename, text);
+        } else {
+            alert(select_alert);
+        }
+
     }, false);
-
 }
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max)) + 1;
 }
-
 
 // For each prompt, create a list item to be inserted in the list group
 function createImgPromptItems(num) {
@@ -141,7 +164,7 @@ function createPromptItems(start, end) {
         prompt_li.setAttribute('class', 'list-group-item prompt');
 
         var prompt_p = document.createElement('p');
-        var name = 'Num ' + String(i) + ' :';
+        var name = '第 ' + String(i) + ' 張圖:';
         var prompt_text = document.createTextNode(name);
         prompt_p.appendChild(prompt_text);
 
@@ -173,7 +196,7 @@ function createPromptItems(start, end) {
 
             var button = document.createElement('button');
             var button_text = document.createTextNode(prompt_values[j].value);
-            button.className = 'group' + i + ' value-btn btn ' + prompt_values[j].class + ' w' + prompt_values[j].weight;
+            button.className = 'group' + i + ' w' + prompt_values[j].weight + ' value-btn btn ' + prompt_values[j].class;
             button.appendChild(button_text);
 
             btn_group.appendChild(button);
