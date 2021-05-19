@@ -2,6 +2,9 @@
 
 var S;
 var E;
+var initial_array;
+var arr;
+var arr_select;
 
 /*
 var prompt_values = [{
@@ -129,6 +132,7 @@ var prompt_values = [{
     }
 ]
 
+
 /*
 var prompt_values = [{
         value: '古典',
@@ -188,6 +192,7 @@ function setCharAt(str, index, chr) {
 myFunction()
 
 function myFunction() {
+
     const myNode = document.getElementById("quiz");
     while (myNode.lastElementChild) {
         myNode.removeChild(myNode.lastElementChild);
@@ -195,17 +200,21 @@ function myFunction() {
     S = document.getElementById("myStartNumber").value;
     E = document.getElementById("myEndNumber").value;
     document.getElementById("demo").innerHTML = "從第 " + S + " 張開始（含），第 " + E + " 張結束（不含）。";
+    //console.log(start, end);
+    S = parseInt(S)
+    E = parseInt(E)
     createPromptItems(S, E);
+    console.log(S, E);
 
-    var initial_array = '';
+    initial_array = '';
     for (var j = 0; j < prompt_values.length; j++) {
         initial_array = initial_array + '0';
     }
     // Initial 2D Array
-    var arr = Array(E - S).fill(initial_array);
+    arr = Array(E - S).fill(initial_array);
     document.getElementById("text-val").value = arr;
 
-    var arr_select = Array(E - S).fill(0);
+    arr_select = Array(E - S).fill(0);
 
     // When user clicks a value display to the user what they selected
     $('.value-btn').mousedown(function() {
@@ -234,31 +243,33 @@ function myFunction() {
         document.getElementById("text-val").value = arr;
     })
 
-
-    // Start file download.
-    document.getElementById("dwn-btn").addEventListener("click", function() {
-
-        var select_alert = "";
-        var select_alert_num = 0;
-        // Check Every Pic
-        for (var i = 0; i < arr_select.length; i++) {
-            if (arr_select[i] != 2) {
-                select_alert += "第" + i + "張，未標記完成。\n";
-                select_alert_num += 1;
-            }
-        }
-
-        if (select_alert_num == 0) {
-            // Generate download of hello.txt file with some content
-            var text = document.getElementById("text-val").value;
-            var filename = '2_' + S + '_' + E + '.txt';
-            download(filename, text);
-        } else {
-            alert(select_alert);
-        }
-
-    }, false);
 }
+
+// Start file download.
+$("#dwn-btn").mousedown(function() {
+    var select_alert = "";
+    var select_alert_num = 0;
+    // Check Every Pic
+    for (var i = 0; i < arr_select.length; i++) {
+        //console.log(i, arr_select[i])
+
+        if (arr_select[i] != 2) {
+            select_alert += "第" + (S + i).toString() + "張，未標記完成。\n";
+            select_alert_num += 1;
+        }
+
+    }
+
+    if (select_alert_num == 0) {
+        // Generate download of hello.txt file with some content
+        var text = document.getElementById("text-val").value;
+        var filename = '2_' + S + '_' + E + '.txt';
+        download(filename, text);
+    } else {
+        alert(select_alert);
+    }
+
+});
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max)) + 1;
@@ -277,19 +288,14 @@ function string_format(str) {
 
 // For each prompt, create a list item to be inserted in the list group
 function createImgPromptItems(num) {
-    console.log(string_format(num));
     var file_name = ('./suychenmxnthu/' + string_format(num) + '.jpg');
     console.log('file_name:', file_name);
     return file_name;
 }
 
 function createPromptItems(start, end) {
-    //console.log(start, end);
-    start = parseInt(start)
-    end = parseInt(end)
 
     for (var i = start; i < end; i++) {
-        console.log(i)
         var prompt_li = document.createElement('li');
         prompt_li.setAttribute('class', 'list-group-item prompt');
 
@@ -300,7 +306,6 @@ function createPromptItems(start, end) {
 
         var prompt_img = document.createElement('img');
         prompt_img.src = createImgPromptItems(i.toString());
-        console.log(i.toString())
         prompt_img.width = "300";
 
         prompt_li.appendChild(prompt_p);
