@@ -2,6 +2,7 @@
 
 var S;
 var E;
+
 /*
 var prompt_values = [{
         value: '快樂/喜悅/愉悅（happiness/joy/amusement）',
@@ -64,9 +65,8 @@ var prompt_values = [{
         weight: 12
     }
 ]
-*/
 
-/*
+
 var prompt_values = [{
         value: '家庭(family)',
         class: 'btn-default',
@@ -193,7 +193,7 @@ function myFunction() {
     }
     S = document.getElementById("myStartNumber").value;
     E = document.getElementById("myEndNumber").value;
-    document.getElementById("demo").innerHTML = "從第 " + S + " 張開始，第 " + E + " 張結束。";
+    document.getElementById("demo").innerHTML = "從第 " + S + " 張開始（含），第 " + E + " 張結束（不含）。";
     createPromptItems(S, E);
 
     var initial_array = '';
@@ -250,7 +250,7 @@ function myFunction() {
         if (select_alert_num == 0) {
             // Generate download of hello.txt file with some content
             var text = document.getElementById("text-val").value;
-            var filename = '3_' + S + '_' + E + '.txt';
+            var filename = '1_' + S + '_' + E + '.txt';
             download(filename, text);
         } else {
             alert(select_alert);
@@ -263,26 +263,43 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max)) + 1;
 }
 
+function string_format(str) {
+    if (str.length < 5) {
+        var k = 5 - str.length;
+        for (var i = 0; i < k; i++) {
+            str = "0" + str;
+
+        }
+    }
+    return str;
+}
+
 // For each prompt, create a list item to be inserted in the list group
 function createImgPromptItems(num) {
-    var file_name = './monet2photo/' + String(num * 100) + '.png';
+    console.log(string_format(num));
+    var file_name = ('./suychenmxnthu/' + string_format(num) + '.jpg');
     console.log('file_name:', file_name);
     return file_name;
 }
 
 function createPromptItems(start, end) {
+    //console.log(start, end);
+    start = parseInt(start)
+    end = parseInt(end)
 
     for (var i = start; i < end; i++) {
+        console.log(i)
         var prompt_li = document.createElement('li');
         prompt_li.setAttribute('class', 'list-group-item prompt');
 
         var prompt_p = document.createElement('p');
-        var name = '第 ' + String(i) + ' 張圖:';
+        var name = '第 ' + i.toString() + ' 張圖:';
         var prompt_text = document.createTextNode(name);
         prompt_p.appendChild(prompt_text);
 
         var prompt_img = document.createElement('img');
-        prompt_img.src = createImgPromptItems(i);
+        prompt_img.src = createImgPromptItems(i.toString());
+        console.log(i.toString())
         prompt_img.width = "300";
 
         prompt_li.appendChild(prompt_p);
