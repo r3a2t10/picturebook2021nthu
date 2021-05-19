@@ -251,7 +251,7 @@ function myFunction() {
         if (select_alert_num == 0) {
             // Generate download of hello.txt file with some content
             var text = document.getElementById("text-val").value;
-            var filename = '1_' + S + '_' + E + '.txt';
+            var filename = '2_' + S + '_' + E + '.txt';
             download(filename, text);
         } else {
             alert(select_alert);
