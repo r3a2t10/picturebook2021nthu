@@ -253,7 +253,7 @@ $("#dwn-btn").mousedown(function() {
     for (var i = 0; i < arr_select.length; i++) {
         //console.log(i, arr_select[i])
 
-        if (arr_select[i] != 2) {
+        if (arr_select[i] == 0) {
             select_alert += "第" + (S + i).toString() + "張，未標記完成。\n";
             select_alert_num += 1;
         }
