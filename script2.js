@@ -233,11 +233,11 @@ function myFunction() {
             $(this).addClass('active');
             arr[res - S] = setCharAt(arr[res - S], res_w - 1, '1');
             arr_select[res - S] += 1;
-            if (arr_select[res - S] > 2) {
+            if (arr_select[res - S] > 3) {
                 $(this).removeClass('active');
                 arr[res - S] = setCharAt(arr[res - S], res_w - 1, '0');
                 arr_select[res - S] -= 1;
-                alert('每張圖只能標注2個標籤，請取消別的標籤再進行選取。');
+                alert('每張圖只能標注3個標籤，請取消別的標籤再進行選取。');
             }
         }
         document.getElementById("text-val").value = arr;
